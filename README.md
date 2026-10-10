@@ -297,9 +297,10 @@ GitHub 仓库 `G1nkoSora99/Java` 已配置为 `origin`，首次推送命令：
 git push -u origin main
 ```
 
-> **推送状态**：完整提交历史已推送到 GitHub `origin`（分支 `main`）。
+> **推送状态**：完整提交历史已推送到 GitHub `origin`（分支 `main`），本地 `main`、`origin/main`
+> 与镜像 `local/main` 三者哈希一致。
 > 推送后已用**从 GitHub 全新 clone + `mvn test`（7 个用例全部通过）**验证：
-> 克隆下来的 19 个文件齐全、8 条提交历史完整，仓库可直接构建运行。
+> 克隆下来的文件齐全、提交历史完整，仓库开箱即可构建运行。
 > 另外保留了一个本机镜像裸库 `local`（`file:///D:/javacode/JDBC-remote.git`）作为离线备份。
 >
 > 后续更新只需：
