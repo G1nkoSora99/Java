@@ -287,18 +287,21 @@ git log --oneline
 
 | 项目 | 地址 |
 | --- | --- |
+| **GitHub 远程仓库（`origin`）** | **https://github.com/G1nkoSora99/Java.git** |
 | 本地工作仓库 | `D:\javacode\JDBC` |
-| 远程仓库（`origin`） | `file:///D:/javacode/JDBC-remote.git` |
-| 远程仓库裸库实体路径 | `D:\javacode\JDBC-remote.git` |
+| 本机镜像裸库（`local`） | `file:///D:/javacode/JDBC-remote.git` |
 
-> **说明**：开发本机没有配置 GitHub / Gitee 的凭据（无 `gh` CLI、无 SSH key、无凭据管理器条目），
-> 因此 `origin` 目前指向本机新建的裸仓库，`git push` / `git clone` / `git pull` 均可正常工作，
-> 完整提交历史已经推送到该地址。
+GitHub 仓库 `G1nkoSora99/Java` 已配置为 `origin`，首次推送命令：
+
+```bash
+git push -u origin main
+```
+
+> **说明**：本机没有存储 GitHub 凭据（无 `gh` CLI、无 SSH key、凭据管理器中无 github 条目），
+> 执行本次作业的自动化会话又禁止交互式登录，因此 `origin` 的首次推送需要：
+> 在已登录 GitHub 的终端中执行上面的命令，或为会话提供 Personal Access Token。
 >
-> 拿到 GitHub / Gitee 账号后，一条命令即可切换为真实远程仓库：
->
-> ```bash
-> git remote set-url origin https://github.com/<用户名>/<仓库名>.git
-> git push -u origin main
-> ```
+> 在此之前，完整提交历史已经推送到本机镜像裸库 `local`，并已用**全新 clone + 重新构建**
+> 验证过仓库内容的完整性（`git ls-remote local` 与 `origin/main` 哈希一致）。
+
 
