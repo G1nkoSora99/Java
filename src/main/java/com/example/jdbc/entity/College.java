@@ -6,34 +6,22 @@ import com.example.jdbc.orm.annotation.Table;
 
 import java.util.Objects;
 
-/**
- * 学院实体（对应数据库 DateTest 中的 college 表）。
- *
- * <p>表结构：id、name、code。</p>
- *
- * @author homework
- */
 @Table("college")
 public class College {
 
-    /** 主键 id，数据库自增。 */
     @Id(autoIncrement = true)
     @Column("id")
     private Integer id;
 
-    /** 学院名称。 */
     @Column("name")
     private String name;
 
-    /** 学院代码。 */
     @Column("code")
     private String code;
 
-    /** 无参构造方法：反射创建对象时必需。 */
     public College() {
     }
 
-    /** 便捷构造方法（不含主键，主键由数据库生成）。 */
     public College(String name, String code) {
         this.name = name;
         this.code = code;
@@ -81,6 +69,13 @@ public class College {
 
     @Override
     public String toString() {
-        return "College{id=" + id + ", name='" + name + '\'' + ", code='" + code + '\'' + '}';
+        return "College{id=" + id
+                + ", name=" + quote(name)
+                + ", code=" + quote(code)
+                + '}';
+    }
+
+    private static String quote(String value) {
+        return value == null ? "null" : "'" + value + "'";
     }
 }

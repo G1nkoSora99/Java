@@ -2,24 +2,11 @@ package com.example.jdbc.demo;
 
 import java.util.List;
 
-/**
- * 控制台表格打印工具（仅用于演示效果，与 ORM 逻辑无关）。
- *
- * <p>支持中文等全角字符的宽度计算，保证控制台输出对齐。</p>
- *
- * @author homework
- */
 final class ConsoleTable {
 
     private ConsoleTable() {
     }
 
-    /**
-     * 打印一张表格。
-     *
-     * @param headers 表头
-     * @param rows    数据行（每行长度应与表头一致）
-     */
     static void print(List<String> headers, List<List<String>> rows) {
         int[] widths = new int[headers.size()];
         for (int i = 0; i < headers.size(); i++) {
@@ -38,7 +25,6 @@ final class ConsoleTable {
             System.out.println(row(data, widths));
         }
         System.out.println(border(widths));
-        System.out.println("共 " + rows.size() + " 行");
     }
 
     private static String border(int[] widths) {
@@ -61,7 +47,6 @@ final class ConsoleTable {
         return sb.toString();
     }
 
-    /** 计算字符串在等宽控制台中的显示宽度（中日韩全角字符按 2 列计算）。 */
     static int displayWidth(String text) {
         if (text == null) {
             return 0;
