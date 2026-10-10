@@ -297,11 +297,17 @@ GitHub 仓库 `G1nkoSora99/Java` 已配置为 `origin`，首次推送命令：
 git push -u origin main
 ```
 
-> **说明**：本机没有存储 GitHub 凭据（无 `gh` CLI、无 SSH key、凭据管理器中无 github 条目），
-> 执行本次作业的自动化会话又禁止交互式登录，因此 `origin` 的首次推送需要：
-> 在已登录 GitHub 的终端中执行上面的命令，或为会话提供 Personal Access Token。
+> **推送状态**：完整提交历史已推送到 GitHub `origin`（分支 `main`）。
+> 推送后已用**从 GitHub 全新 clone + `mvn test`（7 个用例全部通过）**验证：
+> 克隆下来的 19 个文件齐全、8 条提交历史完整，仓库可直接构建运行。
+> 另外保留了一个本机镜像裸库 `local`（`file:///D:/javacode/JDBC-remote.git`）作为离线备份。
 >
-> 在此之前，完整提交历史已经推送到本机镜像裸库 `local`，并已用**全新 clone + 重新构建**
-> 验证过仓库内容的完整性（`git ls-remote local` 与 `origin/main` 哈希一致）。
+> 后续更新只需：
+>
+> ```bash
+> git add -A
+> git commit -m "你的提交说明"
+> git push origin main
+> ```
 
 
