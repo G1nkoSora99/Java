@@ -35,3 +35,6 @@ Desktop.ini
 # ---- Logs ----
 *.log
 logs/
+
+# ---- tooling ----
+.dsh-vision-router/
