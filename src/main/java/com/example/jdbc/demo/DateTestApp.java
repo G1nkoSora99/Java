@@ -23,6 +23,7 @@ public class DateTestApp {
 
     public static void main(String[] args) {
         try (Connection connection = JDBCTool.getConnection()) {
+            System.out.println("数据库 DateTest : student / college");
             initSchema(connection);
             college(connection);
             student(connection);
@@ -30,6 +31,10 @@ public class DateTestApp {
         } catch (SQLException e) {
             throw new DataAccessException(e.getMessage(), e);
         }
+    }
+
+    private static void title(String text) {
+        System.out.println("--- " + text + " ---");
     }
 
     private static void initSchema(Connection connection) {
@@ -62,6 +67,7 @@ public class DateTestApp {
     }
 
     private static void college(Connection connection) {
+        title("方法2 save() : college");
         List<College> colleges = List.of(
                 new College("计算机学院", "CS"),
                 new College("外国语学院", "FL"),
@@ -70,15 +76,18 @@ public class DateTestApp {
             System.out.println(JDBCTool.save(college, connection) + " " + college);
         }
 
+        title("方法5 getOneById(\"2\") : college");
         System.out.println(JDBCTool.getOneById("2", College.class, connection));
         System.out.println(JDBCTool.getOneById("99", College.class, connection));
 
+        title("方法3 update() : college");
         College college = JDBCTool.getOneById("2", College.class, connection);
         college.setName("外国语学院(国际学院)");
         college.setCode("FL-INTL");
         System.out.println(JDBCTool.update(college, connection) + " " + college);
         System.out.println(JDBCTool.getOneById("2", College.class, connection));
 
+        title("方法1 resultSetToList() : college");
         String sql = "SELECT id, name, code FROM college ORDER BY id";
         try (PreparedStatement ps = connection.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
@@ -87,6 +96,7 @@ public class DateTestApp {
             throw new DataAccessException(e.getMessage(), e);
         }
 
+        title("方法4 delete() : college id=3");
         College toDelete = new College();
         toDelete.setId(3);
         System.out.println(JDBCTool.delete(toDelete, connection));
@@ -95,6 +105,7 @@ public class DateTestApp {
     }
 
     private static void student(Connection connection) {
+        title("方法2 save() : student");
         List<Student> students = List.of(
                 new Student("张伟", "计算机科学与技术", 19, LocalDate.of(2021, 9, 1), false, new BigDecimal("5200.00")),
                 new Student("李娜", "软件工程", 20, LocalDate.of(2021, 9, 1), true, new BigDecimal("5800.00")),
@@ -104,8 +115,10 @@ public class DateTestApp {
             System.out.println(JDBCTool.save(student, connection) + " " + student);
         }
 
+        title("方法5 getOneById(\"3\") : student");
         System.out.println(JDBCTool.getOneById("3", Student.class, connection));
 
+        title("方法3 update() : student");
         Student student = JDBCTool.getOneById("3", Student.class, connection);
         student.setAge(21);
         student.setGraduated(true);
@@ -113,6 +126,7 @@ public class DateTestApp {
         System.out.println(JDBCTool.update(student, connection) + " " + student);
         System.out.println(JDBCTool.getOneById("3", Student.class, connection));
 
+        title("方法1 resultSetToList() : student");
         String sql = "SELECT id, name, major, age, enrollment_date, graduated, tuition "
                 + "FROM student ORDER BY id";
         try (PreparedStatement ps = connection.prepareStatement(sql);
@@ -122,6 +136,7 @@ public class DateTestApp {
             throw new DataAccessException(e.getMessage(), e);
         }
 
+        title("方法4 delete() : student id=4");
         Student toDelete = new Student();
         toDelete.setId(4);
         System.out.println(JDBCTool.delete(toDelete, connection));
@@ -130,10 +145,12 @@ public class DateTestApp {
     }
 
     private static void customSql(Connection connection) {
+        title("方法1 resultSetToList() : 自定义 SQL");
         ConsoleTable.print(STUDENT_COLUMNS, studentRows(JDBCTool.query(
                 "SELECT id, name, major, tuition FROM student WHERE graduated = 1 ORDER BY tuition DESC",
                 Student.class, connection)));
 
+        title("方法1 resultSetToList() : 带占位符参数");
         ConsoleTable.print(STUDENT_COLUMNS, studentRows(JDBCTool.query(
                 "SELECT * FROM student WHERE tuition >= ? AND age >= ? ORDER BY tuition DESC",
                 Student.class, connection, new BigDecimal("6000"), 18)));
